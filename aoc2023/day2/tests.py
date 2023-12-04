@@ -8,7 +8,7 @@ from . import part1, part2
 @pytest.mark.parametrize(
     'filename, expected',
     [
-        ('example1.txt', 8),
+        ('example.txt', 8),
         ('input.txt', 3035),
     ],
 )
@@ -21,7 +21,7 @@ def test_part1(filename: str, expected: int):
 @pytest.mark.parametrize(
     'filename, expected',
     [
-        ('example1.txt', 2286),
+        ('example.txt', 2286),
         ('input.txt', 66027),
     ],
 )

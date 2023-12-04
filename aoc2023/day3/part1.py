@@ -9,7 +9,9 @@ def parse_board(text: str) -> dict[tuple[int, int], str]:
     return board
 
 
-def find_regions(board: dict[tuple[int, int], str]) -> dict[tuple[int, int], int]:
+def find_number_regions(
+    board: dict[tuple[int, int], str]
+) -> dict[tuple[int, int], int]:
     regions: dict[tuple[int, int], int] = collections.defaultdict(int)
     current = None
     for (i, j), c in sorted(board.items()):
@@ -31,17 +33,18 @@ def adjacent(p: tuple[int, int], n: int) -> list[tuple[int, int]]:
     ]
 
 
-def digits(board: dict[tuple[int, int], str], p: tuple[int, int], n: int) -> list[str]:
-    return [board[p[0], j] for j in range(p[1], p[1] + n)]
+def part_number(board: dict[tuple[int, int], str], p: tuple[int, int], n: int) -> int:
+    digits = [board[p[0], j] for j in range(p[1], p[1] + n)]
+    return int(''.join(digits))
 
 
 def solve(text: str) -> int:
     board = parse_board(text)
-    regions = find_regions(board)
+    regions = find_number_regions(board)
     res = 0
     for start, n in regions.items():
         if any(board[p] != '.' for p in adjacent(start, n)):
-            res += int(''.join(digits(board, start, n)))
+            res += part_number(board, start, n)
     return res
 
 
