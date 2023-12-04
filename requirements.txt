@@ -4,5 +4,6 @@ ipdb
 ipython
 isort
 mypy
+pre-commit
 pytest
 pyupgrade

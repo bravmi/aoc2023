@@ -1,9 +1,10 @@
+def calibration(line: str) -> int:
+    digits = [c for c in line if c.isdigit()]
+    return int(digits[0]) * 10 + int(digits[-1])
+
+
 def solve(text: str) -> int:
-    res = 0
-    for line in text.splitlines():
-        digits = [c for c in line if c.isdigit()]
-        res += int(digits[0]) * 10 + int(digits[-1])
-    return res
+    return sum(calibration(line) for line in text.splitlines())
 
 
 if __name__ == '__main__':
