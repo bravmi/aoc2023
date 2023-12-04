@@ -20,11 +20,15 @@ def parse_game(line: str) -> tuple[int, list[dict[str, int]]]:
     return i, [parse_round(r) for r in rest.split('; ')]
 
 
+def limited(d: dict[str, int]) -> bool:
+    return all(d[c] <= LIMITS[c] for c in d)
+
+
 def solve(text: str) -> int:
     res = 0
     for game in text.splitlines():
         index, rounds = parse_game(game)
-        if all(all(r.get(c, 0) <= LIMITS[c] for c in LIMITS) for r in rounds):
+        if all(limited(r) for r in rounds):
             res += index
     return res
 
