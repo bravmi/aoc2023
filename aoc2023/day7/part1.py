@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import collections
 import dataclasses
-import enum
 import functools
 import typing
 
@@ -23,42 +22,15 @@ CARD_LABELS = {
 }
 
 
-class HandType(enum.Enum):
-    FIVE_OF_A_KIND = 7
-    FOUR_OF_A_KIND = 6
-    FULL_HOUSE = 5
-    THREE_OF_A_KIND = 4
-    TWO_PAIR = 3
-    ONE_PAIR = 2
-    HIGH_CARD = 1
-
-    def __lt__(self, other: typing.Self) -> bool:
-        return self.value < other.value
-
-
 @dataclasses.dataclass
 class Hand:
     cards: str
     bid: int
 
     @functools.cached_property
-    def type(self) -> HandType:
+    def type(self) -> list[int]:
         counter = collections.Counter(self.cards)
-        match sorted(counter.values()):
-            case [5]:
-                return HandType.FIVE_OF_A_KIND
-            case [1, 4]:
-                return HandType.FOUR_OF_A_KIND
-            case [2, 3]:
-                return HandType.FULL_HOUSE
-            case [1, 1, 3]:
-                return HandType.THREE_OF_A_KIND
-            case [1, 2, 2]:
-                return HandType.TWO_PAIR
-            case [1, 1, 1, 2]:
-                return HandType.ONE_PAIR
-            case _:
-                return HandType.HIGH_CARD
+        return sorted(counter.values(), reverse=True)
 
     def __lt__(self, other: typing.Self) -> bool:
         if self.type == other.type:
