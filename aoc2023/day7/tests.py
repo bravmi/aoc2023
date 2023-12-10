@@ -21,7 +21,7 @@ def test_part1(filename: str, expected: int):
     'filename, expected',
     [
         ('example.txt', 5905),
-        ('input.txt', ...),
+        ('input.txt', 253253225),
     ],
 )
 def test_part2(filename: str, expected: int):

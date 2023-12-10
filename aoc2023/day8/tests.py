@@ -8,8 +8,8 @@ from . import part1, part2
 @pytest.mark.parametrize(
     'filename, expected',
     [
-        ('example.txt', 6),
-        ('input.txt', ...),
+        ('example1.txt', 6),
+        ('input.txt', 19099),
     ],
 )
 def test_part1(filename: str, expected: int):
@@ -17,12 +17,11 @@ def test_part1(filename: str, expected: int):
     assert part1.solve(text) == expected
 
 
-@pytest.mark.skip
 @pytest.mark.parametrize(
     'filename, expected',
     [
-        ('example.txt', ...),
-        ('input.txt', ...),
+        ('example2.txt', 6),
+        ('input.txt', 17099847107071),
     ],
 )
 def test_part2(filename: str, expected: int):
