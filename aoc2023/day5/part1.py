@@ -3,7 +3,7 @@ import typing
 
 
 @dataclasses.dataclass
-class Range:
+class Map:
     dst: int
     src: int
     len: int
@@ -18,14 +18,14 @@ class Range:
         return None
 
 
-def parse_ranges(text: str) -> list[Range]:
+def parse_maps(text: str) -> list[Map]:
     _, *rest = text.splitlines()
-    return [Range.parse(s) for s in rest]
+    return [Map.parse(s) for s in rest]
 
 
-def convert(num: int, ranges: list[Range]) -> int:
-    for r in ranges:
-        dst = r.get(num)
+def convert(num: int, maps: list[Map]) -> int:
+    for map in maps:
+        dst = map.get(num)
         if dst is not None:
             return dst
     return num
@@ -35,8 +35,8 @@ def solve(text: str) -> int:
     section, *rest = text.split('\n\n')
     nums = [int(s) for s in section.split()[1:]]
     for section in rest:
-        ranges = parse_ranges(section)
-        nums = [convert(n, ranges) for n in nums]
+        maps = parse_maps(section)
+        nums = [convert(n, maps) for n in nums]
     return min(nums)
 
 
