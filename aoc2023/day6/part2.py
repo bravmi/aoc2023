@@ -13,9 +13,9 @@ def parse_races(text: str) -> tuple[int, int]:
 
 def winning_ways(time: int, dist: int) -> int:
     a, b, c = 1, -time, dist
-    d = b**2 - 4 * a * c
-    t1 = -b / 2 - (d**0.5) / 2
-    t2 = -b / 2 + (d**0.5) / 2
+    D = b**2 - 4 * a * c
+    t1 = -b / 2 - (D**0.5) / 2
+    t2 = -b / 2 + (D**0.5) / 2
     return math.floor(t2) - math.ceil(t1) + 1
 
 
