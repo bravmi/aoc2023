@@ -1,6 +1,7 @@
 from . import part1
 
 
+# TODO: get rid of inserts
 def prediction(hist: list[int]) -> int:
     seqs = [hist]
     while not all(x == 0 for x in seqs[-1]):

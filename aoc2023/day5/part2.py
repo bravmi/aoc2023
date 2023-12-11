@@ -33,6 +33,7 @@ def parse_seeds(line: str) -> list[Range]:
     return [Range(n, n + l) for n, l in zip(nums[::2], nums[1::2])]
 
 
+# TODO: clean up this range mess
 def convert(rng: Range, maps: list[part1.Map]) -> list[Range]:
     result = []
     for map in maps:

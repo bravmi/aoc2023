@@ -11,6 +11,7 @@ def parse_races(text: str) -> tuple[int, int]:
     return parse_number(lines[0]), parse_number(lines[1])
 
 
+# TODO: consider the case when t1 or t2 are integers
 def winning_ways(time: int, dist: int) -> int:
     a, b, c = 1, -time, dist
     D = b**2 - 4 * a * c
