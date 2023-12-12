@@ -43,8 +43,10 @@ def parse_graph(text: str) -> dict[tuple[int, int], list[tuple[int, int]]]:
 
 
 # TODO: consider refactoring here
-def dfs(graph: dict[tuple[int, int], list[tuple[int, int]]], s: tuple[int, int]) -> int:
-    stack = [s]
+def dfs(
+    graph: dict[tuple[int, int], list[tuple[int, int]]], start: tuple[int, int]
+) -> int:
+    stack = [start]
     visited = set()
     while stack:
         u = stack.pop()
@@ -68,9 +70,9 @@ def find_start(text: str) -> tuple[int, int] | None:
 
 def solve(text: str) -> int:
     graph = parse_graph(text)
-    s = find_start(text)
-    assert s is not None
-    return dfs(graph, s) // 2
+    start = find_start(text)
+    assert start is not None
+    return dfs(graph, start) // 2
 
 
 if __name__ == '__main__':

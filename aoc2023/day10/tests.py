@@ -18,7 +18,6 @@ def test_part1(filename: str, expected: int):
     assert part1.solve(text) == expected
 
 
-# TODO: check test files naming here
 @pytest.mark.parametrize(
     'filename, expected',
     [

@@ -1,7 +1,6 @@
 from . import part1
 
 
-# TODO: check int vs float here
 def shoelace(path: list[tuple[int, int]]) -> int:
     path = path + [path[0]]
     n = len(path)
@@ -18,26 +17,25 @@ def shoelace(path: list[tuple[int, int]]) -> int:
 
 # TODO: consider refactoring here
 def dfs(
-    graph: dict[tuple[int, int], list[tuple[int, int]]], s: tuple[int, int]
+    graph: dict[tuple[int, int], list[tuple[int, int]]], start: tuple[int, int]
 ) -> list[tuple[int, int]]:
-    stack = [s]
-    loop = []
-    visited = set()
+    stack = [start]
+    visited = {}
     while stack:
         u = stack.pop()
         if u in visited:
             continue
-        visited.add(u)
-        loop.append(u)
+        visited[u] = True
         for v in graph[u]:
             stack.append(v)
-    return loop
+    return list(visited.keys())
 
 
 def solve(text: str) -> int:
     graph = part1.parse_graph(text)
-    s = part1.find_start(text)
-    loop = dfs(graph, s)
+    start = part1.find_start(text)
+    assert start is not None
+    loop = dfs(graph, start)
     return shoelace(loop)
 
 
