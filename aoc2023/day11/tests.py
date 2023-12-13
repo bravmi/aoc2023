@@ -17,14 +17,15 @@ def test_part1(filename: str, expected: int):
     assert part1.solve(text) == expected
 
 
-@pytest.mark.skip
 @pytest.mark.parametrize(
-    'filename, expected',
+    'filename, expansion, expected',
     [
-        ('example.txt', ...),
-        ('input.txt', ...),
+        ('example.txt', 2, 374),
+        ('example.txt', 10, 1030),
+        ('example.txt', 100, 8410),
+        ('input.txt', 1_000_000, 644248339497),
     ],
 )
-def test_part2(filename: str, expected: int):
+def test_part2(filename: str, expansion: int, expected: int):
     text = pathlib.Path(__file__).parent.absolute().joinpath(filename).read_text()
-    assert part2.solve(text) == expected
+    assert part2.solve(text, expansion) == expected
