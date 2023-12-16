@@ -1,38 +1,36 @@
-import dataclasses
-import typing
+import functools
+import re
 
 
-@dataclasses.dataclass
-class Record:
-    pattern: str
-    damaged: list[int]
+def parse_record(line: str) -> tuple[str, tuple[int, ...]]:
+    left, right = line.split()
+    return left, tuple(int(x) for x in right.split(','))
 
-    @classmethod
-    def parse(cls, line: str) -> typing.Self:
-        left, right = line.split()
-        return cls(left, [int(x) for x in right.split(',')])
 
-    def arrange(self) -> int:
-        groups = [[0]]
-        for c in self.pattern:
-            match c:
-                case '#':
-                    for g in groups:
-                        g[-1] += 1
-                case '.':
-                    for g in groups:
-                        g.append(0)
-                case '?':
-                    for g in groups.copy():
-                        groups.append(g + [0])
-                        g[-1] += 1
-        groups = [[d for d in g if d] for g in groups]
-        return groups.count(self.damaged)
+# TODO: optimize that
+@functools.cache
+def arrange(pattern: str, damaged: tuple[int]) -> int:
+    if not pattern and not damaged:
+        return 1
+    if not pattern and damaged:
+        return 0
+
+    if pattern[0] == '.':
+        return arrange(pattern[1:], damaged)
+
+    if damaged and re.match(fr'#[#?]{{{damaged[0] - 1}}}([.?]|$)', pattern):
+        return arrange(pattern[damaged[0] + 1 :], damaged[1:])
+    bonus = 0
+    if pattern[0] == '?':
+        bonus = arrange(pattern[1:], damaged)
+    if damaged and re.match(fr'\?[#?]{{{damaged[0] - 1}}}([.?]|$)', pattern):
+        return arrange(pattern[damaged[0] + 1 :], damaged[1:]) + bonus
+    return bonus
 
 
 def solve(text: str) -> int:
-    records = [Record.parse(line) for line in text.splitlines()]
-    return sum(r.arrange() for r in records)
+    records = [parse_record(line) for line in text.splitlines()]
+    return sum(arrange(*r) for r in records)
 
 
 if __name__ == '__main__':
