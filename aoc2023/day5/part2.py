@@ -53,7 +53,6 @@ def convert(rng: Range, maps: list[part1.Map]) -> list[Range]:
 def solve(text: str) -> int:
     section, *rest = text.split('\n\n')
     ranges = parse_seeds(section)
-    print(ranges)
     for section in rest:
         maps = part1.parse_maps(section)
         maps.sort(key=lambda m: m.src)
