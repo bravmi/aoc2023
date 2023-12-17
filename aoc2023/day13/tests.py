@@ -9,7 +9,7 @@ from . import part1, part2
     'filename, expected',
     [
         ('example.txt', 405),
-        ('input.txt', ...),
+        ('input.txt', 27300),
     ],
 )
 def test_part1(filename: str, expected: int):
@@ -17,11 +17,10 @@ def test_part1(filename: str, expected: int):
     assert part1.solve(text) == expected
 
 
-@pytest.mark.skip
 @pytest.mark.parametrize(
     'filename, expected',
     [
-        ('example.txt', ...),
+        ('example.txt', 400),
         ('input.txt', ...),
     ],
 )
