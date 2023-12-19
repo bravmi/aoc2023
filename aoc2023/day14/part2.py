@@ -13,52 +13,40 @@ class Platform:
         for j in range(m):
             for i in range(n):
                 if self._rocks[i][j] == 'O':
-                    k = i
-                    while k > 0 and self._rocks[k - 1][j] == '.':
-                        self._rocks[k][j], self._rocks[k - 1][j] = (
-                            self._rocks[k - 1][j],
-                            self._rocks[k][j],
-                        )
+                    k = i - 1
+                    while k >= 0 and self._rocks[k][j] == '.':
                         k -= 1
+                    self._rocks[i][j], self._rocks[k + 1][j] = '.', 'O'
 
     def slide_west(self) -> None:
         n, m = len(self._rocks), len(self._rocks[0])
         for i in range(n):
             for j in range(m):
                 if self._rocks[i][j] == 'O':
-                    k = j
-                    while k > 0 and self._rocks[i][k - 1] == '.':
-                        self._rocks[i][k], self._rocks[i][k - 1] = (
-                            self._rocks[i][k - 1],
-                            self._rocks[i][k],
-                        )
+                    k = j - 1
+                    while k >= 0 and self._rocks[i][k] == '.':
                         k -= 1
+                    self._rocks[i][j], self._rocks[i][k + 1] = '.', 'O'
 
     def slide_south(self) -> None:
         n, m = len(self._rocks), len(self._rocks[0])
         for j in range(m):
             for i in range(n - 1, -1, -1):
                 if self._rocks[i][j] == 'O':
-                    k = i
-                    while k < n - 1 and self._rocks[k + 1][j] == '.':
-                        self._rocks[k][j], self._rocks[k + 1][j] = (
-                            self._rocks[k + 1][j],
-                            self._rocks[k][j],
-                        )
+                    k = i + 1
+                    while k <= n - 1 and self._rocks[k][j] == '.':
                         k += 1
+                    self._rocks[i][j], self._rocks[k - 1][j] = '.', 'O'
 
     def slide_east(self) -> None:
         n, m = len(self._rocks), len(self._rocks[0])
         for i in range(n):
             for j in range(m - 1, -1, -1):
                 if self._rocks[i][j] == 'O':
-                    k = j
-                    while k < m - 1 and self._rocks[i][k + 1] == '.':
-                        self._rocks[i][k], self._rocks[i][k + 1] = (
-                            self._rocks[i][k + 1],
-                            self._rocks[i][k],
-                        )
+                    k = j + 1
+                    while k <= m - 1 and self._rocks[i][k] == '.':
                         k += 1
+                    self._rocks[i][j], self._rocks[i][k - 1] = '.', 'O'
 
     def calc_load(self) -> int:
         n, m = len(self._rocks), len(self._rocks[0])
