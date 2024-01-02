@@ -9,7 +9,7 @@ from . import part1, part2
     "filename, expected",
     [
         ("example.txt", 102),
-        ("input.txt", ...),
+        ("input.txt", 1044),
     ],
 )
 def test_part1(filename: str, expected: int):
