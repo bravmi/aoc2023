@@ -9,6 +9,7 @@ def shoelace(path: list[tuple[int, int]]) -> int:
         j = (i + 1) % n
         area += path[i][0] * path[j][1]
         area -= path[j][0] * path[i][1]
+    # TODO: move out border calc from here?
     border = sum(
         abs(p2[0] - p1[0]) + abs(p2[1] - p1[1]) for p1, p2 in zip(path, path[1:])
     )
