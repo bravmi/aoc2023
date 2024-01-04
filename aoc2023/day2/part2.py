@@ -10,10 +10,7 @@ def power(rounds: list[part1.Round]) -> int:
 
 
 def solve(text: str) -> int:
-    res = 0
-    for game in text.splitlines():
-        res += power(part1.parse_game(game))
-    return res
+    return sum(power(part1.parse_game(game)) for game in text.splitlines())
 
 
 if __name__ == '__main__':
