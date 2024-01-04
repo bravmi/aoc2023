@@ -3,11 +3,12 @@ from . import part1
 
 def border(path: list[tuple[int, int]]) -> int:
     return sum(
-        abs(p2[0] - p1[0]) + abs(p2[1] - p1[1]) for p1, p2 in zip(path, path[1:])
+        abs(i2 - i1) + abs(j2 - j1) for (i1, j1), (i2, j2) in zip(path, path[1:])
     )
 
 
-def shoelace(path: list[tuple[int, int]]) -> int:
+def shoelace_inner(path: list[tuple[int, int]]) -> int:
+    # TODO: go over shoelace algo
     area = sum(i1 * j2 - i2 * j1 for (i1, j1), (i2, j2) in zip(path, path[1:]))
     return abs(area) // 2 - (border(path) // 2 - 1)
 
@@ -18,12 +19,12 @@ def dfs(
     stack = [start]
     explored = {}
     while stack:
-        u = stack.pop()
-        if u in explored:
+        v = stack.pop()
+        if v in explored:
             continue
-        explored[u] = True
-        for v in graph[u]:
-            stack.append(v)
+        explored[v] = True
+        for w in graph[v]:
+            stack.append(w)
     return list(explored.keys())
 
 
@@ -32,7 +33,7 @@ def solve(text: str) -> int:
     start = part1.find_start(text)
     assert start is not None
     path = dfs(graph, start)
-    return shoelace(path + [path[0]])
+    return shoelace_inner(path + [path[0]])
 
 
 if __name__ == '__main__':
