@@ -61,9 +61,9 @@ def parse_workflow(line: str) -> tuple[str, list[part1.Rule]]:
 def solve(text: str) -> int:
     text1, _ = text.split('\n\n')
     workflows = dict(part1.parse_workflow(line) for line in text1.splitlines())
-    pr = PartRange()
-    part_ranges = pr.run(workflows)
-    return sum(part.combinations() for part in part_ranges if part.accepted())
+    start_pr = PartRange()
+    part_ranges = start_pr.run(workflows)
+    return sum(pr.combinations() for pr in part_ranges if pr.accepted())
 
 
 if __name__ == '__main__':
