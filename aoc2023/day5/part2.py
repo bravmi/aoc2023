@@ -5,6 +5,7 @@ import dataclasses
 from . import part1
 
 
+# TODO: consider renaming to Interval
 @dataclasses.dataclass
 class Range:
     start: int
