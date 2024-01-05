@@ -26,7 +26,7 @@ def parse_path(steps: list[tuple[str, int]]) -> list[tuple[int, int]]:
 def solve(text: str) -> int:
     steps = [parse_step(line) for line in text.splitlines()]
     path = parse_path(steps)
-    return day10.part2.shoelace_inner(path) + day10.part2.border(path)
+    return day10.part2.inner_shoelace(path) + day10.part2.border(path)
 
 
 if __name__ == '__main__':

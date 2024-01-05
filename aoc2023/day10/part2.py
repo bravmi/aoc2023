@@ -7,7 +7,7 @@ def border(path: list[tuple[int, int]]) -> int:
     )
 
 
-def shoelace_inner(path: list[tuple[int, int]]) -> int:
+def inner_shoelace(path: list[tuple[int, int]]) -> int:
     # TODO: go over shoelace algo
     area = sum(i1 * j2 - i2 * j1 for (i1, j1), (i2, j2) in zip(path, path[1:]))
     return abs(area) // 2 - (border(path) // 2 - 1)
@@ -33,7 +33,7 @@ def solve(text: str) -> int:
     start = part1.find_start(text)
     assert start is not None
     path = dfs(graph, start)
-    return shoelace_inner(path + [path[0]])
+    return inner_shoelace(path + [path[0]])
 
 
 if __name__ == '__main__':

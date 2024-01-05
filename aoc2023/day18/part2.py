@@ -13,7 +13,7 @@ def parse_step(line: str) -> tuple[str, int]:
 def solve(text: str) -> int:
     steps = [parse_step(line) for line in text.splitlines()]
     path = part1.parse_path(steps)
-    return day10.part2.shoelace_inner(path) + day10.part2.border(path)
+    return day10.part2.inner_shoelace(path) + day10.part2.border(path)
 
 
 if __name__ == '__main__':
