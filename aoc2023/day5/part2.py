@@ -27,6 +27,12 @@ class Range:
             return [Range(self.start, other.start), Range(other.end, self.end)]
         return [self]
 
+    def __len__(self) -> int:
+        return self.end - self.start
+
+    def __contains__(self, value: int) -> bool:
+        return self.start <= value < self.end
+
 
 def parse_seeds(line: str) -> list[Range]:
     nums = [int(s) for s in line.split()[1:]]

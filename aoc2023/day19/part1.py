@@ -1,26 +1,28 @@
 import dataclasses
 import typing
 
+from aoc2023 import day5
+
 
 @dataclasses.dataclass
 class Condition:
     cat: str
     op: str
-    val: int
+    rng: day5.Range
 
     @classmethod
     def parse(cls, s: str) -> typing.Self:
-        cat, op, val = s[0], s[1], s[2:]
-        return cls(cat, op, int(val))
+        cat, op, val = s[0], s[1], int(s[2:])
+        start, end = 1, 4001
+        if op == '>':
+            start = val + 1
+        elif op == '<':
+            end = val
+        return cls(cat, op, day5.Range(start, end))
 
     def check(self, part: 'Part') -> bool:
         part_val = getattr(part, self.cat)
-        match self.op:
-            case '>':
-                return part_val > self.val
-            case '<':
-                return part_val < self.val
-        return True
+        return part_val in self.rng
 
 
 @dataclasses.dataclass
@@ -42,7 +44,7 @@ class Part:
     m: int
     a: int
     s: int
-    state: str = 'in'
+    state = 'in'
 
     @classmethod
     def parse(cls, line: str) -> typing.Self:
@@ -51,7 +53,7 @@ class Part:
         return cls(x=values[0], m=values[1], a=values[2], s=values[3])
 
     def run(self, workflows: dict[str, list[Rule]]) -> None:
-        while self.state not in ['A', 'R']:
+        while not self.final():
             for rule in workflows[self.state]:
                 if rule.cond is None or rule.cond.check(self):
                     self.state = rule.state
@@ -59,6 +61,9 @@ class Part:
 
     def accepted(self) -> bool:
         return self.state == 'A'
+
+    def final(self) -> bool:
+        return self.state in ['A', 'R']
 
     def rating(self) -> int:
         return self.x + self.m + self.a + self.s
