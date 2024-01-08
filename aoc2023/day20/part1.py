@@ -1,6 +1,7 @@
 import abc
 import collections
 import dataclasses
+import math
 
 
 # TODO: refactor that out
@@ -54,7 +55,7 @@ def parse_graph(lines: list[str]) -> dict[str, list[str]]:
     return dict(parse_vertex(line) for line in lines)
 
 
-def parse_modules(line: str) -> Module:
+def parse_module(line: str) -> Module:
     left, _ = line.split(' -> ')
     prefix, name = left[0], left[1:]
     match prefix:
@@ -71,7 +72,9 @@ def push_button(
     counter: dict[bool, int] = collections.Counter()
     for _ in range(times):
         counter[False] += 1
-        queue = collections.deque([('broadcaster', False)])
+        queue: collections.deque[tuple[str, bool]] = collections.deque(
+            [('broadcaster', False)]
+        )
         while queue:
             v, sig1 = queue.popleft()
             if v not in graph:
@@ -84,19 +87,25 @@ def push_button(
                 sig2 = modules[w].send(v, sig1)
                 if sig2 is not None:
                     queue.append((w, sig2))
-    return counter[False] * counter[True]
+    return math.prod(counter.values())
+
+
+def parse_modules(lines: list[str], graph: dict[str, list[str]]) -> dict[str, Module]:
+    modules = {}
+    for line in lines:
+        module = parse_module(line)
+        modules[module.name] = module
+    for v in graph:
+        for w in graph[v]:
+            if w in modules and isinstance(modules[w], Conjunction):
+                modules[w].send(v, False)
+    return modules
 
 
 def solve(text: str) -> int:
     lines = text.splitlines()
     graph = parse_graph(lines)
-    modules = {
-        module.name: module for module in (parse_modules(line) for line in lines)
-    }
-    for v in graph:
-        for w in graph[v]:
-            if w in modules and isinstance(modules[w], Conjunction):
-                modules[w].send(v, False)
+    modules = parse_modules(lines, graph)
     return push_button(graph, modules, times=1000)
 
 

@@ -1,4 +1,3 @@
-import functools
 import itertools
 import math
 
@@ -17,7 +16,7 @@ def solve(text: str) -> int:
     instructions, rest = text.split('\n\n', 1)
     nodes = part1.parse_nodes(rest)
     steps = [node_steps(node, instructions, nodes) for node in nodes if node[-1] == 'A']
-    return functools.reduce(math.lcm, steps)
+    return math.lcm(*steps)
 
 
 if __name__ == '__main__':
