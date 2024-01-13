@@ -6,25 +6,32 @@ DIRECTIONS = {
 }
 
 
-def plots(garden: list[list[str]], steps: int) -> int:
+def plot_counts(garden: list[list[str]], steps: int) -> list[int]:
     n, m = len(garden), len(garden[0])
     start = next((i, j) for i in range(n) for j in range(m) if garden[i][j] == 'S')
 
-    reached = {start}
+    counts = []
+    plots = {start}
     for _ in range(steps):
-        reached = {
+        plots = {
             (i + di, j + dj)
-            for (i, j) in reached
+            for (i, j) in plots
             for di, dj in DIRECTIONS.values()
-            if 0 <= i + di < n and 0 <= j + dj < m and garden[i + di][j + dj] != '#'
+            if garden[(i + di) % n][(j + dj) % m] != '#'
         }
+        counts.append(len(plots))
 
-    return len(reached)
+    return counts
+
+
+def parse_garden(text: str) -> list[list[str]]:
+    return [list(line) for line in text.splitlines()]
 
 
 def solve(text: str, steps: int) -> int:
     garden = [list(line) for line in text.splitlines()]
-    return plots(garden, steps)
+    counts = plot_counts(garden, steps)
+    return counts[-1]
 
 
 if __name__ == '__main__':

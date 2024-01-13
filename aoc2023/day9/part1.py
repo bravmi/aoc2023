@@ -2,6 +2,7 @@ def parse_history(line: str) -> list[int]:
     return [int(x) for x in line.split()]
 
 
+# TODO: why exactly this is like polynomial interpolation?
 def prediction(hist: list[int]) -> int:
     seqs = [hist]
     while not all(x == 0 for x in seqs[-1]):
